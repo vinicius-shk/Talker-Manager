@@ -12,15 +12,17 @@ const talkValidation2 = require('../middlewares/talkValidation2');
 
 const router = express.Router();
 
+const pathname = '../talker.json';
+
 router.get('/talker', async (_req, res) => {
-  const response = await fs.readFile(path.resolve(__dirname, '../talker.json'), 'utf8');
+  const response = await fs.readFile(path.resolve(__dirname, pathname), 'utf8');
   const data = await JSON.parse(response);
   res.status(200).json(data);
 });
 
 router.get('/talker/:id', async (req, res) => {
   const id = Number(req.params.id);
-  const response = await fs.readFile(path.resolve(__dirname, '../talker.json'), 'utf8');
+  const response = await fs.readFile(path.resolve(__dirname, pathname), 'utf8');
   const data = await JSON.parse(response);
   const getById = data.filter((talker) => talker.id === id);
   if (getById.length === 0) {
@@ -41,14 +43,30 @@ router.post('/talker',
   talkValidation2,
   async (req, res) => {
     const newPerson = req.body;
-    const response = await fs.readFile(path.resolve(__dirname, '../talker.json'), 'utf8');
+    const response = await fs.readFile(path.resolve(__dirname, pathname), 'utf8');
     const data = await JSON.parse(response);
     const nextId = data.length + 1;
     newPerson.id = nextId;
-    console.log(newPerson);
     const newData = [...data, newPerson];
-    await fs.writeFile(path.resolve(__dirname, '../talker.json'), JSON.stringify(newData), 'utf8');
+    await fs.writeFile(path.resolve(__dirname, pathname), JSON.stringify(newData), 'utf8');
     res.status(201).json(newPerson);
+  });
+
+router.put('/talker/:id',
+  tokenValidation,
+  nameAndAgeValidation,
+  talkValidation,
+  talkValidation2,
+  async (req, res) => {
+    const newPerson = req.body;
+    const id = Number(req.params.id);
+    const response = await fs.readFile(path.resolve(__dirname, pathname), 'utf8');
+    const data = await JSON.parse(response);
+    const sIndex = data.findIndex((person) => person.id === id);
+    newPerson.id = data[sIndex].id;
+    data.splice(sIndex, 1, newPerson);
+    await fs.writeFile(path.resolve(__dirname, pathname), JSON.stringify(data), 'utf8');
+    res.status(200).json(newPerson);
   });
 
 module.exports = router;
