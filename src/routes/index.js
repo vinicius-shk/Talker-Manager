@@ -3,6 +3,7 @@ const fs = require('fs').promises;
 const path = require('path');
 
 const generateToken = require('../utils/generateToken');
+const loginValidation = require('../middlewares/loginValidation');
 
 const router = express.Router();
 
@@ -23,9 +24,8 @@ router.get('/talker/:id', async (req, res) => {
   res.status(200).json(getById[0]);
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', loginValidation, async (req, res) => {
   const token = generateToken();
-
   res.status(200).json({ token });
 });
 
