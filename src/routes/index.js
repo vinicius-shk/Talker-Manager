@@ -69,4 +69,14 @@ router.put('/talker/:id',
     res.status(200).json(newPerson);
   });
 
+router.delete('/talker/:id', tokenValidation, async (req, res) => {
+  const id = Number(req.params.id);
+  const response = await fs.readFile(path.resolve(__dirname, pathname), 'utf8');
+  const data = await JSON.parse(response);
+  const sIndex = data.findIndex((person) => person.id === id);
+  data.splice(sIndex, 1);
+  await fs.writeFile(path.resolve(__dirname, pathname), JSON.stringify(data), 'utf8');
+  res.status(204).end();
+});
+
 module.exports = router;
