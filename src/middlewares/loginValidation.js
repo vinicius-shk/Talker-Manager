@@ -1,5 +1,6 @@
 function loginValidation(req, res, next) {
   const { email, password } = req.body;
+  // Regex retirado do StackOverflow.
   const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
   if (!email) return res.status(400).json({ message: 'O campo "email" é obrigatório' });
   if (!email.match(regex)) {
