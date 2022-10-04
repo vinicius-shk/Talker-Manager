@@ -2,6 +2,8 @@ const express = require('express');
 const fs = require('fs').promises;
 const path = require('path');
 
+const generateToken = require('../utils/generateToken');
+
 const router = express.Router();
 
 router.get('/talker', async (_req, res) => {
@@ -19,6 +21,12 @@ router.get('/talker/:id', async (req, res) => {
     return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
   }
   res.status(200).json(getById[0]);
+});
+
+router.post('/login', async (req, res) => {
+  const token = generateToken();
+
+  res.status(200).json({ token });
 });
 
 module.exports = router;
