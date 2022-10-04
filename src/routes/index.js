@@ -20,6 +20,15 @@ router.get('/talker', async (_req, res) => {
   res.status(200).json(data);
 });
 
+router.get('/talker/search', tokenValidation, async (req, res) => {
+  const { q } = req.query;
+  const response = await fs.readFile(path.resolve(__dirname, pathname), 'utf8');
+  const data = await JSON.parse(response);
+  if (!q) return res.status(200).json(data);
+  const personByQuery = data.filter((person) => person.name.includes(q));
+  res.status(200).json(personByQuery);
+});
+
 router.get('/talker/:id', async (req, res) => {
   const id = Number(req.params.id);
   const response = await fs.readFile(path.resolve(__dirname, pathname), 'utf8');
