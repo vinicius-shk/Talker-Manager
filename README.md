@@ -1,10 +1,38 @@
-# :construction: README em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto.
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+# Talker-Manager
+
+Projeto Talker-Manager é uma REST API desenvolvida para gerenciar um sistema de palestrantes. O sistema conta com CRUD, armazenado os dados de palestrantes e conteúdo da palestra, possibilitando consultas e registros de novos palestrantes, assim como o update dos palestrantes existentes e exclusão de palestrantes cadastrados.
+
+### Tecnologias utilizadas
+
+- **Javascript**
+- **Node.js**
+- **MySQL**
+- **Express.js**
+- **Mocha**
+- **Chai**
+- **Sinon**
+
+### Para rodar localmente
+
+Clone o projeto para o seu repositório local.
+
+```
+git clone git@github.com:vinicius-shk/Talker-Manager.git
+
+```
+
+Acesse a raiz do projeto e rode os comandos para instalar as dependências e subir o docker
+
+```
+cd Talker-Manager && npm i && docker-compose up -d
+
+```
+
+Inicie o servidor back-end
+
+```
+docker exec talker_manager -it && npm run dev
+
+```
+
+Realize as requisições na porta **3000**
